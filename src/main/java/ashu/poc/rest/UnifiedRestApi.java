@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
@@ -34,11 +35,12 @@ public class UnifiedRestApi {
 		// convert json/xml stream into JSON java object.
 		final JSONParser jsonParser = new JSONParser();
 		if (streamType.equals(MediaType.APPLICATION_XML)) {
-			final String xml = IOUtils.toString(jsonStream, "UTF-8");
+			final String xml = IOUtils.toString(jsonStream, StandardCharsets.UTF_8);
 			final JSON json = (JSON) new XMLSerializer().read(xml);
 			response = Response.status(200).entity(json.toString()).build();
 		} else if (streamType.equals(MediaType.APPLICATION_JSON)) {
-			final JSONObject jsonObject = (JSONObject) jsonParser.parse(new InputStreamReader(jsonStream, "UTF-8"));
+			final JSONObject jsonObject = (JSONObject) jsonParser
+					.parse(new InputStreamReader(jsonStream, StandardCharsets.UTF_8));
 			// now we have to convert it to our Entity
 			response = Response.status(200).entity(jsonObject.toJSONString()).build();
 		}
