@@ -31,7 +31,6 @@ public class UnifiedRestApi {
 			final InputStream jsonStream) throws UnsupportedEncodingException, IOException, ParseException {
 
 		Response response = null;
-		JSONObject jsonObject = null;
 		// convert json/xml stream into JSON java object.
 		final JSONParser jsonParser = new JSONParser();
 		if (streamType.equals(MediaType.APPLICATION_XML)) {
@@ -39,7 +38,7 @@ public class UnifiedRestApi {
 			final JSON json = (JSON) new XMLSerializer().read(xml);
 			response = Response.status(200).entity(json.toString()).build();
 		} else if (streamType.equals(MediaType.APPLICATION_JSON)) {
-			jsonObject = (JSONObject) jsonParser.parse(new InputStreamReader(jsonStream, "UTF-8"));
+			final JSONObject jsonObject = (JSONObject) jsonParser.parse(new InputStreamReader(jsonStream, "UTF-8"));
 			// now we have to convert it to our Entity
 			response = Response.status(200).entity(jsonObject.toJSONString()).build();
 		}
