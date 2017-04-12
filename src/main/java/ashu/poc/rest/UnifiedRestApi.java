@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -19,6 +20,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import ashu.poc.pojo.RestData;
 import net.sf.json.JSON;
 import net.sf.json.xml.XMLSerializer;
 
@@ -44,6 +46,15 @@ public class UnifiedRestApi {
 			// now we have to convert it to our Entity
 			response = Response.status(200).entity(jsonObject.toJSONString()).build();
 		}
+		return response;
+	}
+
+	@PUT
+	@Path("dynapojo")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response responseDynaPojo(final RestData data) {
+
+		Response response = null;
 		return response;
 	}
 
